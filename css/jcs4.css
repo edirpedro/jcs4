@@ -1,0 +1,155 @@
+@charset "utf-8";
+
+
+/* jCS4
+------------------------------------------------------------*/
+
+/* To hide the element before start animating */
+.animationHidden {
+	visibility: hidden !important;
+}
+
+/* Resetting CSS */
+.jcs4 * {
+	padding: 0;
+	margin: 0;
+}
+
+/* Formatting default elements */
+.jcs4 {
+	position: relative;
+	overflow: hidden;
+}
+
+.jcs4-viewport { 
+	position: relative;
+}
+
+.jcs4-slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.jcs4-slide img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* Crop effect for images */
+
+.jcs4-image-crop {
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.jcs4-image-crop img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: auto;
+	height: 100%;
+	-webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+}
+
+.jcs4-fallback .jcs4-image-crop img {
+	top: 0;
+	left: 0;
+}
+
+
+/* Theme, you can edit from here!
+------------------------------------------------------------*/
+
+/* Controls */
+
+.jcs4-controls {
+	position: absolute; 
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Previous and Next */
+
+.jcs4-prev,
+.jcs4-next {
+	z-index: 3;
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	display: block;
+	width: 30px;
+	height: 60px;
+	margin-top: -30px;
+	background: url(../img/arrows.png) no-repeat;
+	opacity: .5;
+	transition: all .3s;
+}
+
+.jcs4-prev {
+	left: 20px;
+	background-position: center -60px;
+}
+
+.jcs4-next {
+	right: 20px;
+	background-position: center 0;
+}
+
+.jcs4:hover .jcs4-prev,
+.jcs4:hover .jcs4-next  {
+	transition: all .3s;
+	opacity: 1;
+}
+
+/* Pages */
+
+.jcs4-pages {
+	z-index: 3;
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	opacity: .5;
+	transition: all .3s;
+	-webkit-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+}
+
+.jcs4:hover .jcs4-pages {
+	opacity: 1;
+	transition: all .3s;
+}
+
+.jcs4-pages a {
+	cursor: pointer;
+	display: block;
+	float: left;
+	width: 10px;
+	height: 10px;
+	margin: 0 5px;
+	background: white;
+	border: 2px solid white;
+	border-radius: 12px;
+	font-size: 0;
+	line-height: 1;
+	text-indent: -999px;
+	overflow: hidden;
+}
+
+.jcs4-pages a:hover {
+	background: #ccc;
+}
+
+.jcs4-pages a.active {
+	background: #333;
+}
