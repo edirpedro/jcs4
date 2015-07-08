@@ -4,7 +4,7 @@ jCS4 - jQuery CSS Slide Show
 
 A small plugin to fast create a Slide Show, using native browser resources and requesting less data as possible. I written this plugin because I didn't found any other good one that was not too big for my projects.
 
-Read more and see it in action visiting [jCS4](http://hub.edirpedr.com/jcs4/).
+Read more and see it in action visiting [jCS4](http://hub.edirpedro.com.br/jcs4/).
 
 
 Objectives
