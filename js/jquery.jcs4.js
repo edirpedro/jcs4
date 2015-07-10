@@ -1,11 +1,12 @@
 /**
 * jCS4 - jQuery CSS Slide Show
 *
-* @version: 0.1.0
+* @version: 0.2.0
 * @author Edir Pedro
 * @website http://hub.edirpedro.com.br/jCS4
 * @copyright 2015
 * @license MIT - http://opensource.org/licenses/MIT
+* @preserve
 */
 
 ;(function($) {
@@ -31,6 +32,7 @@
 		slideToStart: 0,
 		slideWidth: 0,
 		slideHeight: 0,
+		slidePreload: 1,
 		
 		// Controls
 		autoPages: true,
@@ -145,6 +147,7 @@
 			slider.find(slider.settings.controlPages).find('a').each(function(index) {
 				$(this).attr('data-index', index).on('click', clickPages);
 			});
+			slider.find('.jcs4-controls').hide();
 
 			// Setting Queue
 			slider.queue = {
@@ -164,15 +167,18 @@
 					slider.timer.start();
 				});
 			}
-			
-			// Touch events
-			if (slider.settings.touchEnabled)
-				initTouch();
 
 			_log('Initialized', slider);
 			slider.settings.onLoad();
-						
-			goToSlide(slider.settings.slideToStart);
+			
+			// Preload
+			slider.viewport.append('<div class="jcs4-slide jcs4-loading">');
+			preloadSlides(slider.slides.filter(':lt(' + slider.settings.slidePreload + ')'), function() {
+				_log('Preloaded', slider.settings.slidePreload);
+				if (slider.settings.touchEnabled) initTouch(); // Touch events
+				slider.find('.jcs4-controls').show();
+				goToSlide(slider.settings.slideToStart);
+			});
 
 		}
 		
@@ -190,8 +196,8 @@
 				index = parseInt(slider.queue.front) - 1;
 			
 			_log('Function controlPrevious', index, slider.queue.front);
-			slider.settings.onPrevious(index, slider.queue.front);
 			goToSlide(index);
+			slider.settings.onPrevious(slider.queue.front, slider.queue.back);
 		}
 		
 		/*
@@ -208,8 +214,8 @@
 				index = parseInt(slider.queue.front) + 1;
 			
 			_log('Function controlNext', index, slider.queue.front);
-			slider.settings.onNext(index, slider.queue.front);
 			goToSlide(index);
+			slider.settings.onNext(slider.queue.front, slider.queue.back);
 		}
 		
 		/*
@@ -312,9 +318,6 @@
 			});
 		}
 		
-		/* Helpers
-		==================================================*/
-		
 		/*
 		* Prefixing CSS
 		* Prevent jQuery 1.11.3 to turns "animation-delay: 2s" into "animation: 2s" on Safari
@@ -358,6 +361,25 @@
 			}
 			return false;
 		}
+		
+		/*
+		* Preload slide images
+		*/ 
+		var preloadSlides = function(selector, callback) {
+			var total = selector.find('img').length;
+			if (total == 0) {
+				callback();
+				return;
+			}
+			var count = 0;
+			selector.find('img').each(function(){
+				$(this).one('load', function() {
+					if (++count == total) callback();
+				}).each(function() {
+					if (this.complete) $(this).load();
+				});
+			});
+		}
 
 		/*
 		* Logging
@@ -369,7 +391,7 @@
 		}
 	
 	
-		/* Public Functions
+		/* Public Methods
 		==================================================*/
 	
 		slider.goToPrevious = function() {

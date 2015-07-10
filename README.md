@@ -18,7 +18,6 @@ Objectives
 Todo
 --------------------------------------------------
 
-- Include a loader to wait for images;
 - Write some ideas to serve for fast development;
 - Increse documentation;
 - Create an option to animate In and Out slide effect, could be `data-effectIn` and `data-effectOut`, the rest of the options would be the same. But I'm not sure if this is really necessary!

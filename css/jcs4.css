@@ -68,6 +68,43 @@
 /* Theme, you can edit from here!
 ------------------------------------------------------------*/
 
+/* Loading */
+.jcs4-loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	margin: -20px 0 0 -20px;
+	border: 4px solid rgba(255, 255, 255, .2);
+	border-top-color: #fff;
+	border-radius: 40px;
+	-webkit-animation: loader 1250ms infinite linear;
+	animation: loader 1250ms infinite linear;
+}
+
+@-webkit-keyframes loader {
+	0% { 
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% { 
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes loader {
+	0% { 
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% { 
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
 /* Controls */
 
 .jcs4-controls {
