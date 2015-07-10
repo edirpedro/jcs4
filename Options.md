@@ -29,12 +29,6 @@ Set the animation class to work on the slides.
 ```javascript
 Default: 'animated'
 ```
-		
-**cssSupports**
-Set the CSS properties to check before instantiate the animations, if these properties are not present in the browser, a fallback animation will the used.
-```javascript
-Default: 'transform animation'
-```
 			
 **touchEnabled**
 Enable or disable the touch events on the slideshow.

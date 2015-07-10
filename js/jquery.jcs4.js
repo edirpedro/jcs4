@@ -1,7 +1,7 @@
 /**
 * jCS4 - jQuery CSS Slide Show
 *
-* @version: 0.2.0
+* @version: 0.2.1
 * @author Edir Pedro
 * @website http://hub.edirpedro.com.br/jcs4
 * @git https://github.com/edirpedro/jcs4
@@ -20,7 +20,6 @@
 		autoPlay: true,
 		pauseOnHover: true,
 		animationClass: 'animated',
-		cssSuports: 'transform animation',
 		
 		// Touch
 		touchEnabled: true,
@@ -70,10 +69,6 @@
 		
 		var init = function() {
 			slider.settings = $.extend({}, defaults, options);
-			
-			// Preparing to Fallback
-			if (!hasCSS(slider.settings.cssSuports.split(' ')))
-				slider.addClass('jcs4-fallback');
 						
 			// Clone Slides to future usage
 			slider.original = slider.find(slider.settings.slide).clone();

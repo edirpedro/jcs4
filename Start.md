@@ -1,6 +1,6 @@
 # jQuery CSS Slide Show
 
-<small class="document-version">Version 0.2.0 &mdash; Size %PACKAGE_SIZE%</small>
+<small class="document-version">Version 0.2.1 &mdash; Size %PACKAGE_SIZE%</small>
 		
 ***
 
@@ -10,7 +10,6 @@
 * Uses CSS3 Animations (get native hardware acceleration!)
 * Plugin size %JCS4_SIZE%
 * Animations size %ANIMATIONS_SIZE% (reduce to only the ones you are using)
-* Fallback to old browsers
 * No inline styles
 * Touch swipe events supported
 * Callback API and public methods

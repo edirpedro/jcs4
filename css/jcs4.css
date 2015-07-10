@@ -59,7 +59,7 @@
             transform: translate(-50%, -50%);
 }
 
-.jcs4-fallback .jcs4-image-crop img {
+.no-csstransforms .jcs4 .jcs4-image-crop img {
 	top: 0;
 	left: 0;
 }
