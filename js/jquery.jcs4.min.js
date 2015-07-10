@@ -3,7 +3,8 @@
 *
 * @version: 0.2.0
 * @author Edir Pedro
-* @website http://hub.edirpedro.com.br/jCS4
+* @website http://hub.edirpedro.com.br/jcs4
+* @git https://github.com/edirpedro/jcs4
 * @copyright 2015
 * @license MIT - http://opensource.org/licenses/MIT
 * @preserve

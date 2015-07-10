@@ -1,0 +1,62 @@
+{
+	"attention_seekers": [
+		"bounce",
+		"flash",
+		"jello",
+		"pulse",
+		"rubberBand",
+		"shake",
+		"swing",
+		"tada",
+		"wobble"
+	],
+	"bouncing_entrances": [
+		"bounceIn",
+		"bounceInDown",
+		"bounceInLeft",
+		"bounceInRight",
+		"bounceInUp"
+	],
+	"fading_entrances": [
+		"fadeIn",
+		"fadeInDown",
+		"fadeInDownBig",
+		"fadeInLeft",
+		"fadeInLeftBig",
+		"fadeInRight",
+		"fadeInRightBig",
+		"fadeInUp",
+		"fadeInUpBig"
+	],
+	"flippers": [
+		"flip",
+		"flipInX",
+		"flipInY"
+	],
+	"lightspeed": [
+		"lightSpeedIn"
+	],
+	"rotating_entrances": [
+		"rotateIn",
+		"rotateInDownLeft",
+		"rotateInDownRight",
+		"rotateInUpLeft",
+		"rotateInUpRight"
+	],
+	"sliding_entrances": [
+		"slideInDown",
+		"slideInLeft",
+		"slideInRight",
+		"slideInUp"
+	],
+	"specials": [
+		"rollIn"
+	],
+	"zooming_entrances": [
+		"zoomIn",
+		"zoomInDown",
+		"zoomInLeft",
+		"zoomInRight",
+		"zoomInUp"
+	]
+}
