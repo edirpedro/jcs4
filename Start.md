@@ -60,7 +60,7 @@ Create an element `<div class="jcs4">` and the slides can be many types of HTML 
 ### 3. Choose the effect
 
 At the element you want to animate, insert the attribute `data-effect` and the effect name you want to use, like `fadeIn`. View all the effects going to [Demo](http://hub.edirpedro.com.br/jcs4/examples/demo.php) example.
-```
+```html
 <img data-effect="fadeIn" src="img/name.jpg">
 ```
 		
