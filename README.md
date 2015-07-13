@@ -3,6 +3,7 @@
 A small plugin to fast create a Slide Show, using native browser resources and requesting less data as possible. I written this plugin because I didn't found any other good one that was not too big for my projects.
 
 * [Getting Started](https://github.com/edirpedro/jcs4/blob/master/Start.md)
+* [Documentation](https://github.com/edirpedro/jcs4/blob/master/Documentation.md)
 * [Options](https://github.com/edirpedro/jcs4/blob/master/Options.md)
 * [Demo](http://hub.edirpedro.com.br/jcs4/)
 
