@@ -14,4 +14,6 @@
 
 .zoomInRight {
   animation-name: zoomInRight;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

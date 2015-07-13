@@ -1,7 +1,7 @@
 /**
 * jCS4 - jQuery CSS Slide Show
 *
-* @version: 0.2.1
+* @version: 0.3.0
 * @author Edir Pedro
 * @website http://hub.edirpedro.com.br/jcs4
 * @git https://github.com/edirpedro/jcs4
@@ -19,7 +19,7 @@
 		debug: false,
 		autoPlay: true,
 		pauseOnHover: true,
-		animationClass: 'animated',
+		imgOnDemand: false,
 		
 		// Touch
 		touchEnabled: true,
@@ -32,7 +32,7 @@
 		slideToStart: 0,
 		slideWidth: 0,
 		slideHeight: 0,
-		slidePreload: 1,
+		slideOutWait: 0,
 		
 		// Controls
 		autoPages: true,
@@ -69,6 +69,7 @@
 		
 		var init = function() {
 			slider.settings = $.extend({}, defaults, options);
+			slider.preloadAll = false;
 						
 			// Clone Slides to future usage
 			slider.original = slider.find(slider.settings.slide).clone();
@@ -79,54 +80,13 @@
 
 			// Preparing Viewport
 			slider.viewport = slider.find('.jcs4-viewport');
-			slider.viewport.html('');
-			
+			slider.viewport.html('<div class="jcs4-loading" style="display:none;"></div>');
+						
 			if (slider.settings.slideWidth > 0 && slider.settings.slideHeight > 0) {
-				var style = '<style>.jcs4-viewport { max-height: $height$px; } .jcs4-viewport:before { display: block; content: ""; width: 100%; padding-top: $ratio$%; }</style>';
+				var style = '<style>.jcs4-viewport { max-height: $height$px; } .jcs4-viewport::before { display: block; content: ""; width: 100%; padding-top: $ratio$%; }</style>';
 				style = style.replace('$height$', slider.settings.slideHeight);
 				style = style.replace('$ratio$', (slider.settings.slideHeight / slider.settings.slideWidth) * 100);
 				$('head').append(style);
-			}
-
-			// Setting animations
-			if (hasCSS('animation')) {
-				var animationStart = 'webkitAnimationStart mozAnimationStart MSAnimationStart oanimationstart animationstart';
-				
-				slider.slides.find('[data-effect]').each(function() {
-					var obj = $(this);
-					obj.addClass(slider.settings.animationClass + ' animationHidden ' + obj.attr('data-effect'));
-					
-					var style = [];
-					
-					var delay = obj.attr('data-delay');
-					if (typeof delay == 'string')
-						style.push(cssPrefixed('animation-delay', delay));
-											
-					var direction = obj.attr('data-direction');
-					if (typeof direction == 'string')
-						style.push(cssPrefixed('animation-direction', direction));
-					
-					var duration = obj.attr('data-duration');
-					if (typeof duration == 'string')
-						style.push(cssPrefixed('animation-duration', duration));
-						
-					var iteration = obj.attr('data-iteration-count');
-					if (typeof iteration == 'string')
-						style.push(cssPrefixed('animation-iteration-count', iteration));
-						
-					var timing = obj.attr('data-timing-function');
-					if (typeof timing == 'string')
-						style.push(cssPrefixed('animation-timing-function', timing));
-						
-					obj.attr('style', style.join(' '));
-									
-					obj.one(animationStart, function() {
-						$(this).removeClass('animationHidden');
-					});
-				});
-			} else {
-				// Fallback animation
-				slider.slides.addClass('justFadeIn');
 			}
 			
 			// Building pagination
@@ -138,12 +98,12 @@
 			}
 						
 			// Setting controls
-			slider.find(slider.settings.controlPrevious).on('click', clickPrevious);
-			slider.find(slider.settings.controlNext).on('click', clickNext);
-			slider.find(slider.settings.controlPages).find('a').each(function(index) {
+			slider.controls = slider.find('.jcs4-controls');
+			slider.controls.find(slider.settings.controlPrevious).on('click', clickPrevious);
+			slider.controls.find(slider.settings.controlNext).on('click', clickNext);
+			slider.controls.find(slider.settings.controlPages).find('a').each(function(index) {
 				$(this).attr('data-index', index).on('click', clickPages);
 			});
-			slider.find('.jcs4-controls').hide();
 
 			// Setting Queue
 			slider.queue = {
@@ -152,6 +112,7 @@
 			}
 			
 			// Timer
+			slider.slideIn = null;
 			slider.timer = new Timer(slider, controlNext, slider.settings.slideDuration);
 			slider.hover = false;
 			if (slider.settings.pauseOnHover) {
@@ -164,16 +125,14 @@
 				});
 			}
 
+			// Loaded
 			_log('Initialized', slider);
 			slider.settings.onLoad();
 			
-			// Preload
-			slider.viewport.append('<div class="jcs4-slide jcs4-loading">');
-			preloadSlides(slider.slides.filter(':lt(' + slider.settings.slidePreload + ')'), function() {
-				_log('Preloaded', slider.settings.slidePreload);
-				if (slider.settings.touchEnabled) initTouch(); // Touch events
-				slider.find('.jcs4-controls').show();
-				goToSlide(slider.settings.slideToStart);
+			slider.controls.hide();
+			goToSlide(slider.settings.slideToStart, function() {
+				initTouchEvents(); 
+				slider.controls.show();
 			});
 
 		}
@@ -239,29 +198,124 @@
 		/*
 		* Go to slide
 		*/ 
-		var goToSlide = function(index) {
+		var goToSlide = function(index, callback) {
 		
 			slider.timer.stop();
+			clearTimeout(slider.slideIn);
 			
-			var current = slider.viewport.find(slider.settings.slide);
-			if (current.length == 2)
-				$(current).eq(0).remove();
-		
-			var slide = $(slider.slides[index]).clone(true);
-			slider.viewport.append(slide);
-			
-			slider.viewport.find('.justFadeIn:last').hide().fadeIn(); // just a fallback animation
-			
-			slider.queue.back = slider.queue.front;
-			slider.queue.front = index;
-			
-			_log('Function goToSlide', index);
-			slider.settings.onChange(slider.queue.front, slider.queue.back);
+			preloadSlide(slider.slides.filter('[data-index=' + index + ']'), function(index) {
+	
+				// Remove old slide, just front and back on the viewport
+				var current = slider.viewport.find(slider.settings.slide);
+				if (current.length == 2)
+					$(current).eq(0).remove();
+	
+				// Out animation
+				var slideOut = slider.viewport.find(slider.settings.slide).filter(':first');
+				slideOut = addAnimation(slideOut, 'out');
+	
+				// In animation
+				var slideIn = $(slider.slides[index]).clone();
+				slideIn = addAnimation(slideIn, 'in');
+				
+				// Wait slide out
+				if (slideOut) {
+					slider.slideIn = setTimeout(function() {
+						slider.viewport.append(slideIn);
+					}, slider.settings.slideOutWait);
+				} else {
+					slider.viewport.append(slideIn);
+				}
+				
+				slider.queue.back = slider.queue.front;
+				slider.queue.front = index;
+				
+				_log('Function goToSlide', index);
+				slider.settings.onChange(slider.queue.front, slider.queue.back);
+								
+				adjustPages();
+				slider.timer.start();
+				
+				// Preload the rest of slides
+				if (slider.settings.imgOnDemand === false && slider.preloadAll === false)
+					preloadAll(0);
+				
+				if (callback)
+					callback();
 
-			adjustPages();
-			slider.timer.start();
+			}, index, true);
 			
 		}
+		
+		/*
+		* Add animation to slide
+		*/ 
+		var addAnimation = function(slide, sequence) {
+			var animationStart = 'webkitAnimationStart mozAnimationStart MSAnimationStart oanimationstart animationstart';
+
+			var data = {
+				'in': {
+					'data-delay': 'animation-delay',
+					'data-delay-in': 'animation-delay',
+					'data-direction': 'animation-direction',
+					'data-direction-in': 'animation-direction',
+					'data-duration': 'animation-duration',
+					'data-duration-in': 'animation-duration',
+					'data-iteration-count': 'animation-iteration-count',
+					'data-iteration-count-in': 'animation-iteration-count',
+					'data-timing-function': 'animation-timing-function',
+					'data-timing-function-in': 'animation-timing-function',
+				},
+				'out': {
+					'data-delay-out': 'animation-delay',
+					'data-direction-out': 'animation-direction',
+					'data-duration-out': 'animation-duration',
+					'data-iteration-count-out': 'animation-iteration-count',
+					'data-timing-function-out': 'animation-timing-function',
+				}
+			}
+			
+			var animated = false;
+			var selector = sequence == 'out' ? '[data-effect-out]' : '[data-effect], [data-effect-in]';
+			
+			slide.find(selector).each(function() {
+				var obj = $(this);
+				animated = true;
+				
+				var effect = '';
+				if (sequence == 'out') {
+					effect = obj.attr('data-effect-out');
+				} else {
+					effect = obj.attr('data-effect');
+					if (effect == undefined)
+						 effect = obj.attr('data-effect-in');
+				}
+				
+				var classes = effect;
+				if (sequence == 'in')
+					classes += ' animationHidden';
+				obj.removeClass(obj.data('classes'))
+					.addClass(classes)
+					.data('classes', classes);
+				
+				var style = [];
+				
+				for (var key in data[sequence]) {
+					var value = obj.attr(key);
+					if (typeof value == 'string')
+						style.push(cssPrefixed(data[sequence][key], value));
+				}
+											
+				obj.attr('style', style.join(' '));
+								
+				obj.one(animationStart, function() {
+					$(this).removeClass('animationHidden');
+				});
+			});
+			
+			return animated ? slide : null;
+		}
+
 		
 		/*
 		* Timer object
@@ -290,9 +344,12 @@
 		}
 		
 		/*
-		* Touch event
+		* Touch events
 		*/ 
-		var initTouch = function() {
+		var initTouchEvents = function() {
+			if (!slider.settings.touchEnabled)
+				return;
+				
 			slider.touch = {};
 			
 			slider.on('touchstart', function(e) {			
@@ -312,6 +369,8 @@
 						start > end ? controlNext() : controlPrevious();
 				}
 			});
+			
+			_log('Touch events initiated');
 		}
 		
 		/*
@@ -332,51 +391,46 @@
 		}
 		
 		/*
-		* Checking CSS suport
-		*/ 
-		var hasCSS = function(name) {
-			
-			// Checking an array
-			if (typeof name == 'object') {
-				for (var n in name) {
-					if (hasCSS(name[n]) === false)
-						return false;
-				}
-				return true;
+		* Preload slide images
+		*/
+		var preloadSlide = function(selector, callback, index, loading) {
+			var total = selector.find('[data-src]').length;
+			if (total == 0) {
+				callback(index);
+				return;
 			}
-			
-			// Checking a single name
-			var e = document.createElement('div').style;
-			var prefixes = ['-ms-','-o-','-moz-','-webkit-'];
-			
-			if (e[name] == '') return true;
-			for (var i in prefixes) {
-				var prop = prefixes[i] + name;
-				if (e[prop] == '')
-					return true;
-			}
-			return false;
+			if (loading)
+				slider.find('.jcs4-loading').show();
+			var count = 0;
+			selector.find('[data-src]').each(function() {
+				$(this)
+					.attr('src', $(this).attr('data-src'))
+					.one('load', function() {
+						$(this).removeAttr('data-src');
+						if (++count == total) {
+							slider.find('.jcs4-loading').hide();
+							callback(index);
+						}
+					}).each(function() {
+						if (this.complete) $(this).load();
+					});
+			});
 		}
 		
 		/*
-		* Preload slide images
+		* Prealod All images into slides on sequence
 		*/ 
-		var preloadSlides = function(selector, callback) {
-			var total = selector.find('img').length;
-			if (total == 0) {
-				callback();
-				return;
+		var preloadAll = function(index) {
+			slider.preloadAll = true;
+			if (index < slider.slides.length) {	
+				_log('Function preloadAll', index);
+				var slide = slider.slides.filter('[data-index=' + index + ']');
+				preloadSlide(slide, function() {
+					preloadAll(index + 1);
+				}, index, false);
 			}
-			var count = 0;
-			selector.find('img').each(function(){
-				$(this).one('load', function() {
-					if (++count == total) callback();
-				}).each(function() {
-					if (this.complete) $(this).load();
-				});
-			});
 		}
-
+		
 		/*
 		* Logging
 		*/ 
@@ -427,6 +481,8 @@
 			
 			if (slider.settings.autoPages)
 				slider.find(slider.settings.controlPages).html('');
+			else
+				slider.find(slider.settings.controlPages).find('a').off('click');
 
 			slider.queue = {};
 		}

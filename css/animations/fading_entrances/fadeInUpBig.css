@@ -12,4 +12,6 @@
 
 .fadeInUpBig {
   animation-name: fadeInUpBig;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

@@ -27,4 +27,6 @@
 .flipInY {
   backface-visibility: visible !important;
   animation-name: flipInY;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

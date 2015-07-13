@@ -1,6 +1,6 @@
 # jQuery CSS Slide Show
 
-<small class="document-version">Version 0.2.1 &mdash; Size %PACKAGE_SIZE%</small>
+<small class="document-version">Version 0.3.0 &mdash; Size %JCS4_SIZE% + %ANIMATIONS_SIZE%</small>
 		
 ***
 
@@ -8,9 +8,8 @@
 		
 * Fully Responsive
 * Uses CSS3 Animations (get native hardware acceleration!)
-* Plugin size %JCS4_SIZE%
+* Plugin size %JCS4_SIZE% (reduce more enabling gzip on your server)
 * Animations size %ANIMATIONS_SIZE% (reduce to only the ones you are using)
-* No inline styles
 * Touch swipe events supported
 * Callback API and public methods
 * Animations Support: IE 10+, Firefox 38+, Chrome 36+, Safari 8+, Opera 30+, iOS 8.3+, Android 4.1+
@@ -35,7 +34,7 @@ jQuery Library must be included first. Download the **jCS4** package and upload 
 		
 ### 2. Create HTML markup
 		
-Create an element `<div class="jcs4">` and the slides can be many types of HTML tags inside an element `<div class="jcs4-slide">` to wrap them. Take a look at the [examples](examples.php). The Controls elements can be removed if you don't want all of the controls.
+Create an element `<div class="jcs4">` and the slides can be many types of HTML tags inside an element `<div class="jcs4-slide">` to wrap them. Take a look at the [examples](examples.php). The Controls elements can be removed if you don't want all of the controls. All the slide styles you can write using CSS like a normal layout.
 		
 ```html
 <div class="jcs4">
@@ -50,7 +49,7 @@ Create an element `<div class="jcs4">` and the slides can be many types of HTML 
 	<!-- Slides -->
 	<div class="jcs4-viewport">
 		<div class="jcs4-slide">
-			<img data-effect="fadeIn" src="img/name.jpg">
+			<img data-effect-in="fadeIn" data-effect-out="fadeOut" src="img/name.jpg">
 		</div>
 	</div>
 	
@@ -59,9 +58,9 @@ Create an element `<div class="jcs4">` and the slides can be many types of HTML 
 
 ### 3. Choose the effect
 
-At the element you want to animate, insert the attribute `data-effect` and the effect name you want to use, like `fadeIn`. View all the effects going to [Demo](http://hub.edirpedro.com.br/jcs4/examples/demo.php) example.
+At the element you want to animate, insert the attribute `data-effect` and the effect name you want to use, like `fadeIn`. View all the effects going to [Demo](http://hub.edirpedro.com.br/jcs4/examples/demo.php) example. you can use In and Out effects.
 ```html
-<img data-effect="fadeIn" src="img/name.jpg">
+<img data-effect-in="fadeIn" data-effect-out="fadeOut" src="img/name.jpg">
 ```
 		
 ### 4. Call the jCS4

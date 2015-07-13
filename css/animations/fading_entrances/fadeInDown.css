@@ -12,4 +12,6 @@
 
 .fadeInDown {
   animation-name: fadeInDown;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

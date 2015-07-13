@@ -11,4 +11,6 @@
 
 .slideInUp {
   animation-name: slideInUp;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

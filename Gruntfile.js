@@ -9,8 +9,9 @@ module.exports = function(grunt) {
 		// Processing Animations
 		concat: {
 			dist: {
-				src: ['css/animations/_base.css', 'css/animations/**/*.css'],
-				dest: 'css/animations.css'
+				files: {
+					'css/animations.css': ['css/animations/**/*.css'],
+				}
 			}
 		},
 
@@ -19,21 +20,34 @@ module.exports = function(grunt) {
 				browsers: ['last 2 versions', 'bb 10']
 			},
 			no_dest: {
-				src: 'css/animations.css'
+				src: ['css/animations.css', 'css/animations.pack.css']
 			}
 		},
 
 		cssmin: {
-			minify: {
-				src: ['css/animations.css'],
-				dest: 'css/animations.min.css'
+			target: {
+				files: [{
+					src: ['css/animations.css'],
+					dest: 'css/animations.min.css'
+				},
+				{
+					src: ['css/animations.pack.css'],
+					dest: 'css/animations.pack.min.css'
+				}]
 			}
 		},
 		
-		animationlist: {
+		animationslist: {
 			files: {
 				src: ['css/animations/**/*.css'],
 				dest: 'animations.json'
+			}
+		},
+		
+		animationspack: {
+			files: {
+				src: ['animations.pack.json'],
+				dest: 'css/animations.pack.css'
 			}
 		},
 
@@ -64,7 +78,7 @@ module.exports = function(grunt) {
 	});
 	
 	// Creating the animations JSON list
-	grunt.registerMultiTask('animationlist', 'Creating the animations JSON list', function () {	
+	grunt.registerMultiTask('animationslist', 'Creating the animations JSON list', function () {	
 
 		this.files.forEach(function(f) {
 			var animations = {};
@@ -88,10 +102,40 @@ module.exports = function(grunt) {
 	});
 
 
+	// Creating the animations pack, with only the animations used in the project
+	grunt.registerMultiTask('animationspack', 'Creating the animations package', function () {	
+	
+		this.files.forEach(function(f) {
+			var categories = grunt.file.readJSON(f.src);
+			var target = [];
+			var count = 0;
+			
+			for (category in categories) {
+				if (categories.hasOwnProperty(category)) {
+					files = categories[category];
+					for (file in files) {
+						if (files.hasOwnProperty(file) && files[file]) {
+							target.push('css/animations/' + category + '/' + files[file] + '.css');
+							count += 1;
+						}
+					}
+				}
+			}
+
+			var concat = grunt.config.get('concat');
+			concat.dist.files[f.dest] = target;
+			
+			grunt.config('concat', concat);
+			grunt.log.writeln('Animations pack with ' + count + ' effects.');
+		});
+		
+	});
+
+
 	// Register task
-	grunt.registerTask('animations', ['concat', 'autoprefixer', 'cssmin', 'animationlist']);
+	grunt.registerTask('animations', ['animationslist', 'animationspack', 'concat', 'autoprefixer', 'cssmin']);
 	grunt.registerTask('jcs4', ['uglify']);
-	grunt.registerTask('default', ['concat', 'autoprefixer', 'cssmin', 'animationlist', 'uglify']);
+	grunt.registerTask('default', ['animationslist', 'animationspack', 'concat', 'autoprefixer', 'cssmin', 'uglify']);
 	grunt.registerTask('dev', ['watch']);
 
 };

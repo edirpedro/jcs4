@@ -21,5 +21,7 @@
 
 .bounce {
   animation-name: bounce;
+  animation-duration: 1s;
+  animation-fill-mode: both;
   transform-origin: center bottom;
 }

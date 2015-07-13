@@ -12,4 +12,6 @@
 
 .fadeInLeftBig {
   animation-name: fadeInLeftBig;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

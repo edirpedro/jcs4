@@ -2,7 +2,7 @@
 		
 ***
 		
-These are the options you can set and callbacks and methods to use in your project. If you have any suggestion or an issue, go to the project on [Github](https://github.com/edirpedro/jcs4/) and open a discussion.
+> These are the options you can set and callbacks and methods to use in your project. If you have any suggestion or an issue, go to the project on [Github](https://github.com/edirpedro/jcs4/) and open a discussion.
 		
 ## Settings
 
@@ -23,13 +23,13 @@ Pause the slide show when mouse enter on the viewport.
 ```javascript
 Default: true
 ```
-			
-**animationClass**
-Set the animation class to work on the slides.
+
+**imgOnDemand**
+This will load the images when it is requested by the user. When `false`, after first slide images load ends, the rest of the images will be loaded on sequence automatically. This is useful to build photo galleries with many images.
 ```javascript
-Default: 'animated'
+Default: false
 ```
-			
+				
 **touchEnabled**
 Enable or disable the touch events on the slideshow.
 ```javascript
@@ -67,21 +67,21 @@ Default: 0
 ```
 			
 **slideWidth**
-Set the with size of the slide.
+Set the with size of the slide, when zero it will use your CSS format instead.
 ```javascript
 Default: 0
 ```
 			
 **slideHeight**
-Set the height size of the slides.
+Set the height size of the slides, when zero it will use your CSS format instead.
 ```javascript
 Default: 0
 ```
-			
-**slidePreload**
-Set the number of slides to wait before starting the slideshow, use zero `0` to stop preload the images.
+
+**slideOutWait**
+The waiting time necessary for the Out animations before starting next slide, values in milliseconds like `500`. Only used when the slide has an Out effect.
 ```javascript
-Default: 1
+Default: 0
 ```
 			
 **autoPages**

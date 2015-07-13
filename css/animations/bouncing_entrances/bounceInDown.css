@@ -28,4 +28,6 @@
 
 .bounceInDown {
   animation-name: bounceInDown;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

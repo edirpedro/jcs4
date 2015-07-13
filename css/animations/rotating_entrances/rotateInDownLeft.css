@@ -14,4 +14,6 @@
 
 .rotateInDownLeft {
   animation-name: rotateInDownLeft;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

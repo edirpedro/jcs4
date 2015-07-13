@@ -32,5 +32,7 @@
 
 .jello{
     animation-name:jello;
+    animation-duration: 1s;
+	animation-fill-mode: both;
     transform-origin: center
 }

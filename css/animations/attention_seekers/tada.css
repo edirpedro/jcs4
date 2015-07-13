@@ -22,4 +22,6 @@
 
 .tada {
   animation-name: tada;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

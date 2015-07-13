@@ -17,6 +17,13 @@
 		"bounceInRight",
 		"bounceInUp"
 	],
+	"bouncing_exits": [
+		"bounceOut",
+		"bounceOutDown",
+		"bounceOutLeft",
+		"bounceOutRight",
+		"bounceOutUp"
+	],
 	"fading_entrances": [
 		"fadeIn",
 		"fadeInDown",
@@ -28,13 +35,27 @@
 		"fadeInUp",
 		"fadeInUpBig"
 	],
+	"fading_exits": [
+		"fadeOut",
+		"fadeOutDown",
+		"fadeOutDownBig",
+		"fadeOutLeft",
+		"fadeOutLeftBig",
+		"fadeOutRight",
+		"fadeOutRightBig",
+		"fadeOutUp",
+		"fadeOutUpBig"
+	],
 	"flippers": [
 		"flip",
 		"flipInX",
-		"flipInY"
+		"flipInY",
+		"flipOutX",
+		"flipOutY"
 	],
 	"lightspeed": [
-		"lightSpeedIn"
+		"lightSpeedIn",
+		"lightSpeedOut"
 	],
 	"rotating_entrances": [
 		"rotateIn",
@@ -43,14 +64,29 @@
 		"rotateInUpLeft",
 		"rotateInUpRight"
 	],
+	"rotating_exits": [
+		"rotateOut",
+		"rotateOutDownLeft",
+		"rotateOutDownRight",
+		"rotateOutUpLeft",
+		"rotateOutUpRight"
+	],
 	"sliding_entrances": [
 		"slideInDown",
 		"slideInLeft",
 		"slideInRight",
 		"slideInUp"
 	],
+	"sliding_exits": [
+		"slideOutDown",
+		"slideOutLeft",
+		"slideOutRight",
+		"slideOutUp"
+	],
 	"specials": [
-		"rollIn"
+		"hinge",
+		"rollIn",
+		"rollOut"
 	],
 	"zooming_entrances": [
 		"zoomIn",
@@ -58,5 +94,12 @@
 		"zoomInLeft",
 		"zoomInRight",
 		"zoomInUp"
+	],
+	"zooming_exits": [
+		"zoomOut",
+		"zoomOutDown",
+		"zoomOutLeft",
+		"zoomOutRight",
+		"zoomOutUp"
 	]
 }

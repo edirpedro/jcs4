@@ -12,4 +12,6 @@
 
 .fadeInRight {
   animation-name: fadeInRight;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }

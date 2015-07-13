@@ -11,4 +11,6 @@
 
 .slideInLeft {
   animation-name: slideInLeft;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }
