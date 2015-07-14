@@ -41,7 +41,7 @@ jQuery Library must be included first. Download the **jCS4** package and upload 
 </div>
 ```
 
-<p style="text-align:center"><img class="alignnone" src="jcs4/img/jcs4-layers.png"></p>
+<p style="text-align:center"><img class="alignnone" src="https://raw.githubusercontent.com/edirpedro/jcs4/master/img/jcs4-layers.png"></p>
 
 ## The Controls
 
