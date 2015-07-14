@@ -41,6 +41,8 @@ jQuery Library must be included first. Download the **jCS4** package and upload 
 </div>
 ```
 
+<p style="text-align:center"><img class="alignnone" src="jcs4/img/jcs4-layers.png"></p>
+
 ## The Controls
 
 The controls elements are placed directly on HTML to make it possible to easy customize these elements. The only requirement is that the tag `<a>` needs to be used to provide the click action.
