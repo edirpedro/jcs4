@@ -2,7 +2,7 @@
 
 * * * 
 
-> Here you can read some informations about how this library works and the definitions of some elements and ideas. You can follow this project on [Github](https://github.com/edirpedro/jcs4), open an issue if you found some error, a discussion about a new features, ideas or make a fork. I would appreciate if you corrected the documentation files, my English is not so good and probably there are some grammatical errors. Sorry about that!
+> Here you can read some informations about how this plugin works and the definitions of some elements and ideas. You can follow this project on [Github](https://github.com/edirpedro/jcs4), open an issue if you found some error, a discussion about a new features, ideas or make a fork. I would appreciate if you corrected the documentation files, my English is not so good and probably there are some grammatical errors. Sorry about that!
 
 ## Required files
 				
@@ -59,7 +59,7 @@ The controls elements are placed directly on HTML to make it possible to easy cu
 
 ### Customizing the pages
 
-You can customize the pages to be represented as a thumbnail, you just need to write the HTML and CSS code to get the layout you want for it, then set the option `autoPages: false` to disable the pages generation and use yours instead. The library will look at the tags `<a>` and make a connection to the slides in the viewport, so don't forget to use the same number of pages and slides.
+You can customize the pages to be represented as a thumbnail, you just need to write the HTML and CSS code to get the layout you want for it, then set the option `autoPages: false` to disable the pages generation and use yours instead. The plugin will look at the tags `<a>` and make a connection to the slides in the viewport, so don't forget to use the same number of pages and slides.
 
 ```html
 <div class="jcs4">
@@ -174,7 +174,7 @@ To use an effect in an element, write the attribute and value in the HTML tag, t
 * `data-effect-in`: Set the effect when the element _enter_ the viewport
 * `data-effect-out`: Set the effect when the element _leave_ the viewport
 
-When using `data-effect-out` you can probably want to get a little time to animate the leave effect before start the next slide. Use the option `slideOutWait: 500` when instantiate the library, to indicate the time in milliseconds you need to the end animations.
+When using `data-effect-out` you can probably want to get a little time to animate the leave effect before start the next slide. Use the option `slideOutWait: 500` when instantiate the plugin, to indicate the time in milliseconds you need to the end animations.
 
 ### Customizing a built-in animation
 
@@ -208,7 +208,7 @@ You can build a small package for your project, eliminating unnecessary effects 
 
 ## Preloading images
 
-The library has a preloader that can handle all the images inside a slide to load it before shows on the viewport. To use that feature you need to write the marckup replacing the `src` property to the `data-src` of an `<img>` tag, to prevent the browser requesting the image before it really needs to. This function is usefull if you are building a photo gallery with many images to load. Note that this function doesn't preload images in the background elements.
+The plugin has a preloader that can handle all the images inside a slide to load it before shows on the viewport. To use that feature you need to write the marckup replacing the `src` property to the `data-src` of an `<img>` tag, to prevent the browser requesting the image before it really needs to. This function is usefull if you are building a photo gallery with many images to load. Note that this function doesn't preload images in the background elements.
 
 ```html
 <div class="jcs4-slide">
@@ -216,7 +216,7 @@ The library has a preloader that can handle all the images inside a slide to loa
 </div>
 ```
 
-After the first slide shows on the viewport, the preloader will automatically start preloading the next slides. If you want to only load images on demand, when the user click on the next button for example, set the option `imgOnDemand: true` when instantiate the library to stop this.
+After the first slide shows on the viewport, the preloader will automatically start preloading the next slides. If you want to only load images on demand, when the user click on the next button for example, set the option `imgOnDemand: true` when instantiate the plugin to stop this.
 
 ```javascript
 $('.jcs4').jCS4({

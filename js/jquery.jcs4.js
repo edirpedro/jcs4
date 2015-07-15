@@ -1,7 +1,7 @@
 /**
 * jCS4 - jQuery CSS Slide Show
 *
-* @version: 0.3.0
+* @version: 0.3.1
 * @author Edir Pedro
 * @website http://hub.edirpedro.com.br/jcs4
 * @git https://github.com/edirpedro/jcs4
@@ -47,7 +47,25 @@
 		onLoad: function() {}
 		
 	}
+
+	/*
+	* Function jcs4Find() will search for the first element found in the objects array passed
+	* $.jcs4Find('selector', [element, document]);
+	*/
+	$.extend({
+		jcs4Find: function(selector, objs) {
+			for (var i in objs) {
+				var elem = jQuery(selector, objs[i]);
+				if (elem.length)
+					return elem;
+			}
+			return jQuery();
+		}
+	});
 	
+	/*
+	* jCS4 plugin
+	*/
 	$.fn.jCS4 = function(options) {
 	
 		if(this.length === 0) return this;
@@ -69,6 +87,7 @@
 		
 		var init = function() {
 			slider.settings = $.extend({}, defaults, options);
+			slider.addClass('loading');
 			slider.preloadAll = false;
 						
 			// Clone Slides to future usage
@@ -91,17 +110,16 @@
 			
 			// Building pagination
 			if (slider.settings.autoPages) {
-				var pages = slider.find(slider.settings.controlPages);
+				var pages = $.jcs4Find(slider.settings.controlPages, [slider, document]);
 				$.each(slider.slides, function(index) {
 					pages.append('<a>' + (index + 1) + '</a>');
 				});
 			}
 						
-			// Setting controls
-			slider.controls = slider.find('.jcs4-controls');
-			slider.controls.find(slider.settings.controlPrevious).on('click', clickPrevious);
-			slider.controls.find(slider.settings.controlNext).on('click', clickNext);
-			slider.controls.find(slider.settings.controlPages).find('a').each(function(index) {
+			// Setting controls			
+			$.jcs4Find(slider.settings.controlPrevious, [slider, document]).on('click', clickPrevious);
+			$.jcs4Find(slider.settings.controlNext, [slider, document]).on('click', clickNext);
+			$.jcs4Find(slider.settings.controlPages, [slider, document]).find('a').each(function(index) {
 				$(this).attr('data-index', index).on('click', clickPages);
 			});
 
@@ -129,10 +147,9 @@
 			_log('Initialized', slider);
 			slider.settings.onLoad();
 			
-			slider.controls.hide();
 			goToSlide(slider.settings.slideToStart, function() {
 				initTouchEvents(); 
-				slider.controls.show();
+				slider.removeClass('loading');
 			});
 
 		}
@@ -178,17 +195,17 @@
 		*/ 
 		var clickPages = function(e) {
 			e.preventDefault();
-			var index = $(e.target).attr('data-index');
+			var index = $(e.currentTarget).attr('data-index');
 			
 			if (index == slider.queue.front)
 				return;
 
-			_log('Function clickPages', index);			
+			_log('Function clickPages', e, index);			
 			goToSlide(index);
 		}
 		
 		var adjustPages = function() {
-			slider.find(slider.settings.controlPages)
+			$.jcs4Find(slider.settings.controlPages, [slider, document])
 				.find('a')
 				.removeClass('active')
 				.filter('[data-index=' + slider.queue.front + ']')
@@ -476,13 +493,13 @@
 			
 			slider.off('touchstart touchmove touchend');
 			slider.viewport.html(slider.original);
-			slider.find(slider.settings.controlPrevious).off('click');
-			slider.find(slider.settings.controlNext).off('click');
+			$.jcs4Find(slider.settings.controlPrevious, [slider, document]).off('click');
+			$.jcs4Find(slider.settings.controlNext, [slider, document]).off('click');
 			
 			if (slider.settings.autoPages)
-				slider.find(slider.settings.controlPages).html('');
+				$.jcs4Find(slider.settings.controlPages, [slider, document]).html('');
 			else
-				slider.find(slider.settings.controlPages).find('a').off('click');
+				$.jcs4Find(slider.settings.controlPages, [slider, document]).find('a').off('click');
 
 			slider.queue = {};
 		}

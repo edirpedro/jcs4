@@ -18,11 +18,11 @@
 /* Formatting default elements */
 .jcs4 {
 	position: relative;
-	overflow: hidden;
 }
 
 .jcs4-viewport { 
 	position: relative;
+	overflow: hidden;
 }
 
 .jcs4-slide {
@@ -59,7 +59,7 @@
             transform: translate(-50%, -50%);
 }
 
-.no-csstransforms .jcs4 .jcs4-image-crop img {
+.no-csstransforms .jcs4-image-crop img {
 	top: 0;
 	left: 0;
 }
@@ -114,6 +114,10 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.jcs4.loading .jcs4-controls {
+	display: none;
 }
 
 /* Previous and Next */

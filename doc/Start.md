@@ -1,6 +1,6 @@
 # jQuery CSS Slide Show
 
-<small class="document-version">Version 0.3.0 &mdash; Size %JCS4_SIZE% + %ANIMATIONS_SIZE%</small>
+<small class="document-version">Version 0.3.1 &mdash; Size %JCS4_SIZE% + %ANIMATIONS_SIZE%</small>
 		
 ***
 
@@ -80,5 +80,5 @@ $(document).ready(function () {
 		
 ## How to customize
 		
-There are some options you can use to customize the plugin in your website and create great experiences. Read the [options](http://hub.edirpedro.com.br/jcs4/options.php) page to know all of them. And take a look at some [examples](http://hub.edirpedro.com.br/jcs4/examples.php) you can build with this library.
+There are some options you can use to customize the plugin in your website and create great experiences. Read the [options](http://hub.edirpedro.com.br/jcs4/options.php) page to know all of them. And take a look at some [examples](http://hub.edirpedro.com.br/jcs4/examples.php) you can build with this plugin.
 		
