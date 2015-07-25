@@ -103,10 +103,15 @@ This will result in these inline styles on your page. The Height size and the Ra
 .jcs4-viewport {
 	max-height: HEIGHTpx;
 }
+.jcs4-viewport:before {
+	/* IE8 only */
+	display: block; 
+	content: "";
+	padding-top: RATIO%; 
+}
 .jcs4-viewport::before {
 	display: block; 
-	content: ""; 
-	width: 100%; 
+	content: "";
 	padding-top: RATIO%; 
 }
 ```

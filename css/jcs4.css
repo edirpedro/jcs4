@@ -139,12 +139,12 @@
 }
 
 .jcs4-prev {
-	left: -20px;
+	left: -30px;
 	background-position: center -60px;
 }
 
 .jcs4-next {
-	right: -20px;
+	right: -30px;
 	background-position: center 0;
 }
 
@@ -171,7 +171,7 @@
 .jcs4-pages {
 	z-index: 3;
 	position: absolute;
-	bottom: -20px;
+	bottom: -30px;
 	left: 50%;
 	opacity: 0;
 	transition: all .3s;

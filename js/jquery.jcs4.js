@@ -1,7 +1,7 @@
 /**
 * jCS4 - jQuery CSS Slide Show
 *
-* @version: 0.3.1
+* @version: 0.3.2
 * @author Edir Pedro
 * @website http://hub.edirpedro.com.br/jcs4
 * @git https://github.com/edirpedro/jcs4
@@ -89,6 +89,11 @@
 			slider.settings = $.extend({}, defaults, options);
 			slider.addClass('loading');
 			slider.preloadAll = false;
+			
+			// Test supports
+			slider.supports = {
+				animation: hasCSS('animation')
+			}
 						
 			// Clone Slides to future usage
 			slider.original = slider.find(slider.settings.slide).clone();
@@ -102,7 +107,7 @@
 			slider.viewport.html('<div class="jcs4-loading" style="display:none;"></div>');
 						
 			if (slider.settings.slideWidth > 0 && slider.settings.slideHeight > 0) {
-				var style = '<style>.jcs4-viewport { max-height: $height$px; } .jcs4-viewport::before { display: block; content: ""; width: 100%; padding-top: $ratio$%; }</style>';
+				var style = '<style>.jcs4-viewport { max-height: $height$px; } .jcs4-viewport:before { display: block; content: ""; padding-top: $ratio$%; } .jcs4-viewport::before { display: block; content: ""; padding-top: $ratio$%; }</style>';
 				style = style.replace('$height$', slider.settings.slideHeight);
 				style = style.replace('$ratio$', (slider.settings.slideHeight / slider.settings.slideWidth) * 100);
 				$('head').append(style);
@@ -221,7 +226,7 @@
 			clearTimeout(slider.slideIn);
 			
 			preloadSlide(slider.slides.filter('[data-index=' + index + ']'), function(index) {
-	
+
 				// Remove old slide, just front and back on the viewport
 				var current = slider.viewport.find(slider.settings.slide);
 				if (current.length == 2)
@@ -268,6 +273,10 @@
 		* Add animation to slide
 		*/ 
 		var addAnimation = function(slide, sequence) {
+		
+			if(!slider.supports.animation)
+				return slide;
+				
 			var animationStart = 'webkitAnimationStart mozAnimationStart MSAnimationStart oanimationstart animationstart';
 
 			var data = {
@@ -405,6 +414,33 @@
 				if (e[prop] == '')
 					return prop + ': ' + value + ';';
 			}
+		}
+		
+		/*
+		* Checking CSS suport
+		*/ 
+		var hasCSS = function(name) {
+			
+			// Checking an array
+			if (typeof name == 'object') {
+				for (var n in name) {
+					if (hasCSS(name[n]) === false)
+						return false;
+				}
+				return true;
+			}
+			
+			// Checking a single name
+			var e = document.createElement('div').style;
+			var prefixes = ['-ms-','-o-','-moz-','-webkit-'];
+			
+			if (e[name] == '') return true;
+			for (var i in prefixes) {
+				var prop = prefixes[i] + name;
+				if (e[prop] == '')
+					return true;
+			}
+			return false;
 		}
 		
 		/*

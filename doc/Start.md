@@ -1,6 +1,6 @@
 # jQuery CSS Slide Show
 
-<small class="document-version">Version 0.3.1 &mdash; Size %JCS4_SIZE% + %ANIMATIONS_SIZE%</small>
+<small class="document-version">Version 0.3.2 &mdash; Size %JCS4_SIZE% + %ANIMATIONS_SIZE%</small>
 		
 ***
 

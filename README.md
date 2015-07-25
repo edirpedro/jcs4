@@ -11,7 +11,7 @@ A small plugin for quickly creating Slide Shows, using native browser resources 
 
 - Use only CSS Animations to get hardware acceleration;
 - Write only functions that is really usefull to many situations;
-- Stay small and fast as possible.
+- Stay small and fast.
 
 ## Todo
 
